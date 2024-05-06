@@ -1,9 +1,7 @@
 ﻿#pragma once
 
-#include <unordered_map>
 #include <list>
 #include <vector>
-#include <SFML/Audio.hpp>
 
 #include "Entity.h"
 
@@ -16,8 +14,6 @@ public:
     static std::vector<Entity*> entities;
     static std::list<Entity*> entitiesToAdd;
     static std::list<std::vector<Entity*>::const_iterator> entitiesToRemove;
-    
-    static std::unordered_map<std::string, sf::SoundBuffer> soundBuffers;
     
     static size_t score;
     

@@ -1,8 +1,10 @@
 ﻿#include "Bullet.h"
 
 #include "Asteroid.h"
+#include "Audio.h"
 #include "Game.h"
 #include "Physics.h"
+#include "SoundNames.h"
 
 Bullet::Bullet(sf::Vector2f position, sf::Vector2f direction) : Entity(position, 0), direction(direction), shape(2), lifetime(BULLET_LIFE) { }
 
@@ -27,6 +29,7 @@ void Bullet::update(float deltaTime)
             lifetime = 0;
             Game::destroyEntity(asteroid);
             Game::score += 10;
+            Audio::playSound(ASTEROID_HIT);
             return;
         }
     }

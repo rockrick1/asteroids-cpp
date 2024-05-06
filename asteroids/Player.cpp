@@ -1,8 +1,10 @@
 ﻿#include "Player.h"
 
+#include "Audio.h"
 #include "Bullet.h"
 #include "Game.h"
 #include "Global.h"
+#include "SoundNames.h"
 
 Player::Player() : Entity(sf::Vector2f(500, 500), 0), vertexes(sf::LineStrip, 5), shootTimer(0)
 {
@@ -16,9 +18,6 @@ Player::Player() : Entity(sf::Vector2f(500, 500), 0), vertexes(sf::LineStrip, 5)
     {
         vertexes[i].color = sf::Color::White;
     }
-
-    shootSound.setBuffer(Game::soundBuffers["shoot"]);
-    shootSound.setVolume(.5f);
 }
 
 void Player::update(float deltaTime)
@@ -45,7 +44,7 @@ void Player::update(float deltaTime)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && shootTimer <= 0)
     {
-        shootSound.play();
+        Audio::playSound(SHOOT);
         shootTimer = SHOOT_DELAY;
         Game::entitiesToAdd.push_back(new Bullet(position, sf::Vector2f(cos(radians), sin(radians))));
     }
