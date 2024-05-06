@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Entity.h"
+#include <SFML/Audio.hpp>
 
 constexpr float PLAYER_SIZE = 15;
 constexpr float PLAYER_COLLISION_SIZE = 40;
@@ -11,6 +12,8 @@ class Player : public Entity
 {
 private:
     sf::VertexArray vertexes;
+    sf::Sound shootSound;
+    
     float shootTimer;
     
 public:
