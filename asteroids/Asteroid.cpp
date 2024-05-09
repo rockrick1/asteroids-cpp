@@ -46,7 +46,7 @@ void Asteroid::update(float deltaTime)
 
 void Asteroid::draw(sf::RenderWindow& window)
 {
-    window.draw(vertexes, sf::Transform().translate(position).rotate(rotation));
+    window.draw(vertexes, getTransform());
 }
 
 sf::Vector2f Asteroid::getRandomDirection()

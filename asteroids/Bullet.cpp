@@ -22,9 +22,8 @@ void Bullet::update(float deltaTime)
             continue;
         
         Asteroid* asteroid = dynamic_cast<Asteroid*>(Game::entities[i]);
-        sf::Transform asteroidTransform = sf::Transform().translate(asteroid->position).rotate(asteroid->rotation);
 
-        if (physics::intersects(position, physics::getTransformedPolygon(asteroid->vertexes, asteroidTransform)))
+        if (physics::intersects(position, physics::getTransformedPolygon(asteroid->vertexes, asteroid->getTransform())))
         {
             lifetime = 0;
             Game::destroyEntity(asteroid);
@@ -37,5 +36,5 @@ void Bullet::update(float deltaTime)
 
 void Bullet::draw(sf::RenderWindow& window)
 {
-    window.draw(shape, sf::Transform().translate(position));
+    window.draw(shape, getTransform());
 }
