@@ -5,7 +5,7 @@
 
 #include "Entity.h"
 
-constexpr float ASTEROID_SPAWN_INTERVAL = .3f;
+constexpr float ASTEROID_SPAWN_INTERVAL = 2;
 constexpr int SCORE_FONT_SIZE = 48;
 
 class Game
@@ -15,8 +15,8 @@ public:
     static size_t score;
     
 private:
-    static std::list<Entity*> entitiesToAdd;
-    static std::list<std::vector<Entity*>::const_iterator> entitiesToRemove;
+    static std::vector<Entity*> entitiesToAdd;
+    static std::vector<Entity*> entitiesToRemove;
     static float asteroidSpawnTimer;
     static sf::Text scoreText;
     static sf::Font font;

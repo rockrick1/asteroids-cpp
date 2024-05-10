@@ -6,8 +6,8 @@
 #include "Global.h"
 
 std::vector<Entity*> Game::entities{};
-std::list<Entity*> Game::entitiesToAdd{};
-std::list<std::vector<Entity*>::const_iterator> Game::entitiesToRemove{};
+std::vector<Entity*> Game::entitiesToAdd{};
+std::vector<Entity*> Game::entitiesToRemove{};
 
 size_t Game::score{};
 float Game::asteroidSpawnTimer{};
@@ -76,15 +76,14 @@ void Game::update(float deltaTime)
     }
 
     for (const auto& entity : entitiesToAdd)
-    {
         entities.push_back(entity);
-    }
-    for (const auto& entity : Game::entitiesToRemove)
-    {
-        delete* entity;
-        entities.erase(entity);
-    }
     
+    for (int i = 0; i < entitiesToRemove.size(); i++)
+    {
+        entities.erase(std::find(entities.begin(), entities.end(), entitiesToRemove[i]));
+        delete entitiesToRemove[i];
+    }
+
     asteroidSpawnTimer -= deltaTime;
     if (asteroidSpawnTimer <= 0)
     {
@@ -109,7 +108,7 @@ void Game::createEntity(Entity* entity)
 
 void Game::destroyEntity(Entity* entity)
 {
-    entitiesToRemove.push_back(std::find(Game::entities.begin(), Game::entities.end(), entity));
+    entitiesToRemove.push_back(entity);
 }
 
 void Game::gameOver()
