@@ -12,6 +12,8 @@ std::vector<Entity*> Game::entitiesToRemove{};
 size_t Game::score{};
 float Game::asteroidSpawnTimer{};
 
+sf::Text Game::gameOverText{};
+sf::Text Game::continueText{};
 sf::Text Game::scoreText{};
 sf::Font Game::font{};
 
@@ -25,15 +27,27 @@ void Game::initialize()
     Audio::initialize();
     
     font.loadFromFile("font.ttf");
+    
     scoreText.setFont(font);
     scoreText.setPosition(sf::Vector2f(30, 20));
     scoreText.setCharacterSize(SCORE_FONT_SIZE);
+    
+    gameOverText.setFont(font);
+    gameOverText.setPosition(sf::Vector2f(250, 350));
+    gameOverText.setCharacterSize(GAME_OVER_FONT_SIZE);
+    gameOverText.setString("Game Over!");
+    
+    continueText.setFont(font);
+    continueText.setPosition(sf::Vector2f(450, 550));
+    continueText.setCharacterSize(CONTINUE_FONT_SIZE);
+    continueText.setString("Press space to play again");
 
     begin();
 }
 
 void Game::begin()
 {
+    isGameOver = false;
     entities.clear();
     score = 0;
     entities.push_back(new Player());
@@ -96,8 +110,10 @@ void Game::update(float deltaTime)
 
     if (isGameOver)
     {
-        isGameOver = false;
-        begin();
+        window.draw(gameOverText);
+        window.draw(continueText);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            begin();
     }
 }
 
@@ -114,4 +130,9 @@ void Game::destroyEntity(Entity* entity)
 void Game::gameOver()
 {
     isGameOver = true;
+}
+
+void removeEntities()
+{
+    
 }
