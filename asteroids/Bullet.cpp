@@ -27,7 +27,7 @@ void Bullet::update(float deltaTime)
         {
             lifetime = 0;
             Game::destroyEntity(asteroid);
-            Game::score += 10;
+            Game::incrementScore(10);
             Audio::playSound(ASTEROID_HIT);
             return;
         }

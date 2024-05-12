@@ -4,29 +4,57 @@
 #include "Audio.h"
 #include "Player.h"
 #include "Global.h"
+#include <fstream>
 
 std::vector<Entity*> Game::entities{};
 std::vector<Entity*> Game::entitiesToAdd{};
 std::vector<Entity*> Game::entitiesToRemove{};
 
 size_t Game::score{};
+size_t Game::highScore{};
 float Game::asteroidSpawnTimer{};
+
+sf::Text Game::highScoreText{};
+sf::Text Game::menuText{};
+sf::Text Game::playText{};
+
+sf::Text Game::scoreText{};
 
 sf::Text Game::gameOverText{};
 sf::Text Game::continueText{};
-sf::Text Game::scoreText{};
 sf::Font Game::font{};
 
 sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",sf::Style::Close | sf::Style::Titlebar);
 sf::Clock gameClock{};
 
-bool isGameOver;
+Game::State Game::state{};
 
 void Game::initialize()
 {
     Audio::initialize();
+
+    std::ifstream file("score.dat", std::ios::binary | std::ios::in);
+    if (file.is_open())
+    {
+        file.read(reinterpret_cast<char*>(&highScore), sizeof(size_t));
+        file.close();
+    }
     
     font.loadFromFile("font.ttf");
+    
+    highScoreText.setFont(font);
+    highScoreText.setPosition(sf::Vector2f(40, 20));
+    highScoreText.setCharacterSize(SCORE_FONT_SIZE);
+    
+    menuText.setFont(font);
+    menuText.setPosition(sf::Vector2f(280, 350));
+    menuText.setCharacterSize(128);
+    menuText.setString("ASTEROIDS");
+    
+    playText.setFont(font);
+    playText.setPosition(sf::Vector2f(450, 550));
+    playText.setCharacterSize(CONTINUE_FONT_SIZE);
+    playText.setString("Press space to begin");
     
     scoreText.setFont(font);
     scoreText.setPosition(sf::Vector2f(30, 20));
@@ -42,12 +70,12 @@ void Game::initialize()
     continueText.setCharacterSize(CONTINUE_FONT_SIZE);
     continueText.setString("Press space to play again");
 
-    begin();
+    state = MENU;
 }
 
 void Game::begin()
 {
-    isGameOver = false;
+    state = GAME;
     entities.clear();
     score = 0;
     entities.push_back(new Player());
@@ -65,8 +93,7 @@ void Game::run()
             if (e.type == sf::Event::Closed)
                 window.close();
         }
-
-        window.clear();
+        
         Game::update(deltaTime);
         window.display();
     }
@@ -74,6 +101,19 @@ void Game::run()
 
 void Game::update(float deltaTime)
 {
+    window.clear();
+
+    if (state == MENU)
+    {
+        highScoreText.setString("high score: " + std::to_string(highScore));
+        window.draw(highScoreText);
+        window.draw(menuText);
+        window.draw(playText);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            begin();
+        return;
+    }
+    
     entitiesToAdd.clear();
     entitiesToRemove.clear();
 
@@ -82,7 +122,7 @@ void Game::update(float deltaTime)
         entities[i]->update(deltaTime);
         entities[i]->draw(window);
     }
-    if (isGameOver)
+    if (state == GAME_OVER)
     {
         entitiesToAdd.clear();
         for (Entity* entity : entities)
@@ -108,12 +148,14 @@ void Game::update(float deltaTime)
     scoreText.setString(std::to_string(score));
     window.draw(scoreText);
 
-    if (isGameOver)
+    if (state == GAME_OVER)
     {
         window.draw(gameOverText);
         window.draw(continueText);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
             begin();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            state = MENU;
     }
 }
 
@@ -127,12 +169,25 @@ void Game::destroyEntity(Entity* entity)
     entitiesToRemove.push_back(entity);
 }
 
-void Game::gameOver()
+void Game::incrementScore(int amount)
 {
-    isGameOver = true;
+    score += amount;
 }
 
-void removeEntities()
+void Game::gameOver()
 {
-    
+    state = GAME_OVER;
+    if (score > highScore)
+    {
+        printf("YEEHAW");
+        highScore = score;
+        std::ofstream file("score.dat", std::ios::binary | std::ios::out);
+        if (file.is_open())
+        {
+            file.write(reinterpret_cast<const char*>(&highScore), sizeof(size_t));
+            file.close();
+        }
+        else
+            printf("Failed to write highscore to file!");
+    }
 }

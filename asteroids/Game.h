@@ -13,16 +13,26 @@ class Game
 {
 public:
     static std::vector<Entity*> entities;
-    static size_t score;
     
 private:
     static std::vector<Entity*> entitiesToAdd;
     static std::vector<Entity*> entitiesToRemove;
+    static size_t score;
+    static size_t highScore;
     static float asteroidSpawnTimer;
+
+    static sf::Text highScoreText;
+    static sf::Text menuText;
+    static sf::Text playText;
+    
+    static sf::Text scoreText;
+    
     static sf::Text gameOverText;
     static sf::Text continueText;
-    static sf::Text scoreText;
+    
     static sf::Font font;
+    
+    static enum State { MENU, GAME, GAME_OVER } state;
     
 public:
     static void initialize();
@@ -31,5 +41,6 @@ public:
     static void update(float deltaTime);
     static void createEntity(Entity* entity);
     static void destroyEntity(Entity* entity);
+    static void incrementScore(int amount);
     static void gameOver();
 };

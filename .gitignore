@@ -34,7 +34,8 @@ x86/
 *.app
 
 .idea/
-.vs/
+.vs
+*.dat
 
 # NuGet Packages
 *.nupkg
