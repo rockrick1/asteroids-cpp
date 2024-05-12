@@ -8,7 +8,7 @@
 #include "Physics.h"
 #include "SoundNames.h"
 
-Player::Player() : Entity(sf::Vector2f(500, 500), 0), vertexes(sf::LineStrip, 5), shootTimer(0)
+Player::Player() : Entity(sf::Vector2f(500, 500), 0, PLAYER_COLLISION_SIZE / 2), vertexes(sf::LineStrip, 5), shootTimer(0)
 {
     vertexes[0].position = sf::Vector2f(PLAYER_SIZE, 0);
     vertexes[1].position = sf::Vector2f(-PLAYER_SIZE, -PLAYER_SIZE);
@@ -60,11 +60,8 @@ void Player::update(float deltaTime)
     {
         if (typeid(*Game::entities[i]) != typeid(Asteroid))
             continue;
-        
-        Asteroid* asteroid = dynamic_cast<Asteroid*>(Game::entities[i]);
     
-        if (physics::intersects(physics::getTransformedPolygon(vertexes, getTransform()),
-            physics::getTransformedPolygon(asteroid->vertexes, asteroid->getTransform())))
+        if (physics::intersects(*this, *Game::entities[i]))
         {
             Game::gameOver();
             return;

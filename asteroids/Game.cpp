@@ -2,17 +2,19 @@
 
 #include "Asteroid.h"
 #include "Audio.h"
-#include "Player.h"
 #include "Global.h"
 #include <fstream>
+
+#include "AsteroidSpawner.h"
 
 std::vector<Entity*> Game::entities{};
 std::vector<Entity*> Game::entitiesToAdd{};
 std::vector<Entity*> Game::entitiesToRemove{};
 
+Player* Game::player;
+
 size_t Game::score{};
 size_t Game::highScore{};
-float Game::asteroidSpawnTimer{};
 
 sf::Text Game::highScoreText{};
 sf::Text Game::menuText{};
@@ -78,8 +80,9 @@ void Game::begin()
     state = GAME;
     entities.clear();
     score = 0;
-    entities.push_back(new Player());
-    asteroidSpawnTimer = ASTEROID_SPAWN_INTERVAL;
+    player = new Player;
+    entities.push_back(player);
+    entities.push_back(new AsteroidSpawner);
 }
 
 void Game::run()
@@ -94,6 +97,7 @@ void Game::run()
                 window.close();
         }
         
+        window.clear();
         Game::update(deltaTime);
         window.display();
     }
@@ -101,8 +105,6 @@ void Game::run()
 
 void Game::update(float deltaTime)
 {
-    window.clear();
-
     if (state == MENU)
     {
         highScoreText.setString("high score: " + std::to_string(highScore));
@@ -136,13 +138,6 @@ void Game::update(float deltaTime)
     {
         entities.erase(std::find(entities.begin(), entities.end(), entitiesToRemove[i]));
         delete entitiesToRemove[i];
-    }
-
-    asteroidSpawnTimer -= deltaTime;
-    if (asteroidSpawnTimer <= 0)
-    {
-        entities.push_back(new Asteroid());
-        asteroidSpawnTimer = ASTEROID_SPAWN_INTERVAL;
     }
 
     scoreText.setString(std::to_string(score));
@@ -179,7 +174,6 @@ void Game::gameOver()
     state = GAME_OVER;
     if (score > highScore)
     {
-        printf("YEEHAW");
         highScore = score;
         std::ofstream file("score.dat", std::ios::binary | std::ios::out);
         if (file.is_open())

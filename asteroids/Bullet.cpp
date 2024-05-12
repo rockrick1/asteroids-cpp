@@ -6,7 +6,7 @@
 #include "Physics.h"
 #include "SoundNames.h"
 
-Bullet::Bullet(sf::Vector2f position, sf::Vector2f direction) : Entity(position, 0), direction(direction), shape(2), lifetime(BULLET_LIFE) { }
+Bullet::Bullet(sf::Vector2f position, sf::Vector2f direction) : Entity(position, 0, 2), direction(direction), shape(2), lifetime(BULLET_LIFE) { }
 
 void Bullet::update(float deltaTime)
 {

@@ -14,14 +14,9 @@ private:
     sf::Vector2f direction;
     
 public:
-    Asteroid();
+    Asteroid(sf::Vector2f position, sf::Vector2f direction);
 
     void update(float deltaTime) override;
     
     void draw(sf::RenderWindow& window) override;
-
-private:
-    static sf::Vector2f getRandomDirection();
-
-    static sf::Vector2f getRandomPosition();
 };

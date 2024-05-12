@@ -4,7 +4,7 @@
 
 #include "Global.h"
 
-Asteroid::Asteroid() : Entity(sf::Vector2f(600, 300), 0), vertexes(sf::LineStrip, 12)
+Asteroid::Asteroid(sf::Vector2f position, sf::Vector2f direction) : Entity(position, 0, ASTEROID_COLLISION_SIZE / 2), vertexes(sf::LineStrip, 12), direction(direction)
 {
     vertexes[0].position = sf::Vector2f(-40, 40);
     vertexes[1].position = sf::Vector2f(-50, 10);
@@ -23,9 +23,6 @@ Asteroid::Asteroid() : Entity(sf::Vector2f(600, 300), 0), vertexes(sf::LineStrip
     {
         vertexes[i].color = sf::Color::White;
     }
-
-    direction = getRandomDirection();
-    position = getRandomPosition();
 }
 
 void Asteroid::update(float deltaTime)
@@ -47,25 +44,5 @@ void Asteroid::update(float deltaTime)
 void Asteroid::draw(sf::RenderWindow& window)
 {
     window.draw(vertexes, getTransform());
-}
-
-sf::Vector2f Asteroid::getRandomDirection()
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> distribution(0, 2 * PI);
-        
-    float angle = distribution(gen);
-    return {cos(angle), sin(angle)};
-}
-
-sf::Vector2f Asteroid::getRandomPosition()
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> xDistribution(ASTEROID_COLLISION_SIZE / 2, SCREEN_WIDTH - ASTEROID_COLLISION_SIZE / 2);
-    std::uniform_real_distribution<float> yDistribution(ASTEROID_COLLISION_SIZE / 2, SCREEN_HEIGHT - ASTEROID_COLLISION_SIZE / 2);
-        
-    return {xDistribution(gen), yDistribution(gen)};
 }
 

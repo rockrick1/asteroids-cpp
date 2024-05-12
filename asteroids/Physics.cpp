@@ -64,6 +64,24 @@ bool physics::intersects(const sf::VertexArray& polygon1, const sf::VertexArray&
     return true;
 }
 
+bool physics::intersects(Entity& e1, Entity& e2)
+{
+    float sizes = e1.size + e2.size;
+    return (sizes * sizes) > getDistanceSquaredTo(e1.position, e2.position);
+}
+
+float physics::getDistanceSquaredTo(sf::Vector2f& p1, sf::Vector2f& p2)
+{
+    float xDist = abs(p1.x - p2.x);
+    float yDist = abs(p1.y - p2.y);
+    return xDist*xDist + yDist*yDist;
+}
+
+float physics::getDistanceTo(sf::Vector2f& p1, sf::Vector2f& p2)
+{
+    return sqrt(getDistanceSquaredTo(p1, p2));
+}
+
 sf::VertexArray physics::getTransformedPolygon(const sf::VertexArray& polygon, const sf::Transform transform)
 {
     sf::VertexArray transformed = polygon;
