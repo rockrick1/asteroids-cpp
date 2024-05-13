@@ -1,12 +1,14 @@
 ﻿#include "Asteroid.h"
 
+#include "Game.h"
 #include "Global.h"
 #include "Utils.h"
 
-Asteroid::Asteroid(sf::Vector2f position, sf::Vector2f direction) : Entity(position, 0, ASTEROID_COLLISION_SIZE / 2), direction(direction)
+Asteroid::Asteroid(sf::Vector2f position, sf::Vector2f direction, int level)
+    : Entity(position, 0, ASTEROID_BASE_COLLISION_SIZE * level), direction(direction), level(level)
 {
-    float minRadius = ASTEROID_COLLISION_SIZE / 3;
-    float maxRadius = ASTEROID_COLLISION_SIZE / 1.3;
+    float minRadius = size / 1.3f;
+    float maxRadius = size * 1.3f;
     int nodeAmount = utils::randRangei(9, 12);
     float angleStep = PI * 2 / (float)nodeAmount;
     vertexes = sf::VertexArray(sf::LineStrip, nodeAmount);
@@ -33,15 +35,27 @@ void Asteroid::update(float deltaTime)
     position += ASTEROID_SPEED * direction * deltaTime;
     rotation += ASTEROID_ROTATION * deltaTime;
 
-    if (position.x < ASTEROID_COLLISION_SIZE / 2)
+    if (position.x < size / 2)
         direction.x = abs(direction.x);
-    else if (position.x > SCREEN_WIDTH - ASTEROID_COLLISION_SIZE / 2)
+    else if (position.x > SCREEN_WIDTH - size / 2)
         direction.x = -abs(direction.x);
 
-    if (position.y < ASTEROID_COLLISION_SIZE / 2)
+    if (position.y < size / 2)
         direction.y = abs(direction.y);
-    else if (position.y > SCREEN_HEIGHT - ASTEROID_COLLISION_SIZE / 2)
+    else if (position.y > SCREEN_HEIGHT - size / 2)
         direction.y = -abs(direction.y);
+}
+
+void Asteroid::onDestroy()
+{
+    if (level <= 1)
+        return;
+    float angle = utils::randRangef(0, 2 * PI);
+    sf::Vector2f newDirection = {cos(angle), sin(angle)};
+    float distance = 20;
+    
+    Game::createEntity(new Asteroid(position + (newDirection * distance), newDirection, level - 1));
+    Game::createEntity(new Asteroid(position - (newDirection * distance), -newDirection, level - 1));
 }
 
 void Asteroid::draw(sf::RenderWindow& window)

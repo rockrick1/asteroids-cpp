@@ -14,13 +14,9 @@ void AsteroidSpawner::update(float deltaTime)
     spawnTimer -= deltaTime;
     if (spawnTimer <= 0)
     {
-        Game::createEntity(new Asteroid(getRandomPosition(), getRandomDirection()));
+        Game::createEntity(new Asteroid(getRandomPosition(), getRandomDirection(), ASTEROID_SPAWN_LEVEL));
         spawnTimer = ASTEROID_SPAWN_INTERVAL;
     }
-}
-
-void AsteroidSpawner::draw(sf::RenderWindow& window)
-{
 }
 
 sf::Vector2f AsteroidSpawner::getRandomDirection()
@@ -34,8 +30,8 @@ sf::Vector2f AsteroidSpawner::getRandomPosition()
     sf::Vector2f result;
     do
     {
-        result = {utils::randRangef(ASTEROID_COLLISION_SIZE / 2, SCREEN_WIDTH - ASTEROID_COLLISION_SIZE / 2),
-            utils::randRangef(ASTEROID_COLLISION_SIZE / 2, SCREEN_HEIGHT - ASTEROID_COLLISION_SIZE / 2)};
+        result = {utils::randRangef(ASTEROID_BASE_COLLISION_SIZE / 2, SCREEN_WIDTH - ASTEROID_BASE_COLLISION_SIZE / 2),
+            utils::randRangef(ASTEROID_BASE_COLLISION_SIZE / 2, SCREEN_HEIGHT - ASTEROID_BASE_COLLISION_SIZE / 2)};
     }
     while (physics::getDistanceSquaredTo(Game::player->position, result) < PLAYER_MINIMUM_SPAWN_DISTANCE_SQUARED);
     return result;

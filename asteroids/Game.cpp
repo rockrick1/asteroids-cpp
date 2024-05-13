@@ -56,7 +56,7 @@ void Game::initialize()
     playText.setFont(font);
     playText.setPosition(sf::Vector2f(450, 550));
     playText.setCharacterSize(CONTINUE_FONT_SIZE);
-    playText.setString("Press space to begin");
+    playText.setString("Press enter to begin");
     
     scoreText.setFont(font);
     scoreText.setPosition(sf::Vector2f(30, 20));
@@ -70,7 +70,7 @@ void Game::initialize()
     continueText.setFont(font);
     continueText.setPosition(sf::Vector2f(450, 550));
     continueText.setCharacterSize(CONTINUE_FONT_SIZE);
-    continueText.setString("Press space to play again");
+    continueText.setString("Press enter to play again");
 
     state = MENU;
 }
@@ -111,13 +111,10 @@ void Game::update(float deltaTime)
         window.draw(highScoreText);
         window.draw(menuText);
         window.draw(playText);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
             begin();
         return;
     }
-    
-    entitiesToAdd.clear();
-    entitiesToRemove.clear();
 
     for (size_t i = 0; i < entities.size(); i++)
     {
@@ -131,14 +128,20 @@ void Game::update(float deltaTime)
             destroyEntity(entity);
     }
 
-    for (const auto& entity : entitiesToAdd)
-        entities.push_back(entity);
+    for (int i = 0; i < entitiesToAdd.size(); i++)
+    {
+        entitiesToAdd[i]->start();
+        entities.push_back(entitiesToAdd[i]);
+    }
+    entitiesToAdd.clear();
     
     for (int i = 0; i < entitiesToRemove.size(); i++)
     {
+        entitiesToRemove[i]->onDestroy();
         entities.erase(std::find(entities.begin(), entities.end(), entitiesToRemove[i]));
         delete entitiesToRemove[i];
     }
+    entitiesToRemove.clear();
 
     scoreText.setString(std::to_string(score));
     window.draw(scoreText);
@@ -147,7 +150,7 @@ void Game::update(float deltaTime)
     {
         window.draw(gameOverText);
         window.draw(continueText);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
             begin();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             state = MENU;
