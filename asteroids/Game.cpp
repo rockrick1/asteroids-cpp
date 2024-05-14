@@ -26,7 +26,11 @@ sf::Text Game::gameOverText{};
 sf::Text Game::continueText{};
 sf::Font Game::font{};
 
-sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Asteroids",sf::Style::Close | sf::Style::Titlebar);
+sf::RenderWindow window(
+    sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT),
+    "Asteroids",
+    sf::Style::Close | sf::Style::Titlebar
+);
 sf::Clock gameClock{};
 
 Game::State Game::state{};
@@ -41,32 +45,32 @@ void Game::initialize()
         file.read(reinterpret_cast<char*>(&highScore), sizeof(size_t));
         file.close();
     }
-    
+
     font.loadFromFile("font.ttf");
-    
+
     highScoreText.setFont(font);
     highScoreText.setPosition(sf::Vector2f(40, 20));
     highScoreText.setCharacterSize(SCORE_FONT_SIZE);
-    
+
     menuText.setFont(font);
     menuText.setPosition(sf::Vector2f(280, 350));
     menuText.setCharacterSize(128);
     menuText.setString("ASTEROIDS");
-    
+
     playText.setFont(font);
     playText.setPosition(sf::Vector2f(450, 550));
     playText.setCharacterSize(CONTINUE_FONT_SIZE);
     playText.setString("Press enter to begin");
-    
+
     scoreText.setFont(font);
     scoreText.setPosition(sf::Vector2f(30, 20));
     scoreText.setCharacterSize(SCORE_FONT_SIZE);
-    
+
     gameOverText.setFont(font);
     gameOverText.setPosition(sf::Vector2f(250, 350));
     gameOverText.setCharacterSize(GAME_OVER_FONT_SIZE);
     gameOverText.setString("Game Over!");
-    
+
     continueText.setFont(font);
     continueText.setPosition(sf::Vector2f(450, 550));
     continueText.setCharacterSize(CONTINUE_FONT_SIZE);
@@ -96,9 +100,9 @@ void Game::run()
             if (e.type == sf::Event::Closed)
                 window.close();
         }
-        
+
         window.clear();
-        Game::update(deltaTime);
+        update(deltaTime);
         window.display();
     }
 }
@@ -134,7 +138,7 @@ void Game::update(float deltaTime)
         entities.push_back(entitiesToAdd[i]);
     }
     entitiesToAdd.clear();
-    
+
     for (int i = 0; i < entitiesToRemove.size(); i++)
     {
         entitiesToRemove[i]->onDestroy();

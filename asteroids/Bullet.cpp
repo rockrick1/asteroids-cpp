@@ -6,12 +6,15 @@
 #include "Physics.h"
 #include "SoundNames.h"
 
-Bullet::Bullet(sf::Vector2f position, sf::Vector2f direction) : Entity(position, 0, 2), direction(direction), shape(2), lifetime(BULLET_LIFE) { }
+Bullet::Bullet(sf::Vector2f position, sf::Vector2f direction) : Entity(position, 0, 2), direction(direction), shape(2),
+                                                                lifetime(BULLET_LIFE)
+{
+}
 
 void Bullet::update(float deltaTime)
 {
     position += direction * BULLET_SPEED * deltaTime;
-    
+
     lifetime -= deltaTime;
     if (lifetime <= 0)
         Game::destroyEntity(this);
@@ -20,8 +23,8 @@ void Bullet::update(float deltaTime)
     {
         if (typeid(*Game::entities[i]) != typeid(Asteroid))
             continue;
-        
-        Asteroid* asteroid = dynamic_cast<Asteroid*>(Game::entities[i]);
+
+        auto asteroid = dynamic_cast<Asteroid*>(Game::entities[i]);
 
         if (physics::intersects(position, physics::getTransformedPolygon(asteroid->vertexes, asteroid->getTransform())))
         {

@@ -4,7 +4,7 @@ bool physics::intersects(const sf::Vector2f& point, const sf::VertexArray& polyg
 {
     size_t n = polygon.getVertexCount() - 1;
     size_t intersectionCount = 0;
-    sf::Vector2f rayEnd = sf::Vector2f(std::numeric_limits<float>::max(), point.y);
+    auto rayEnd = sf::Vector2f(std::numeric_limits<float>::max(), point.y);
 
     for (size_t j = 0; j < n; j++)
     {
@@ -13,7 +13,7 @@ bool physics::intersects(const sf::Vector2f& point, const sf::VertexArray& polyg
 
         if ((p1.y >= point.y || p2.y < point.y) && (p2.y >= point.y || p1.y < point.y))
             continue;
-            
+
         float t = (point.y - p1.y) / (p2.y - p1.y);
         float intersectX = p1.x + t * (p2.x - p1.x);
 
@@ -34,7 +34,7 @@ float physics::getDistanceSquaredTo(sf::Vector2f& p1, sf::Vector2f& p2)
 {
     float xDist = abs(p1.x - p2.x);
     float yDist = abs(p1.y - p2.y);
-    return xDist*xDist + yDist*yDist;
+    return xDist * xDist + yDist * yDist;
 }
 
 float physics::getDistanceTo(sf::Vector2f& p1, sf::Vector2f& p2)

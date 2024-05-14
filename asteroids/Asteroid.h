@@ -9,9 +9,8 @@ class Asteroid : public Entity
 {
 public:
     sf::VertexArray vertexes;
-    
+
 private:
-    
     sf::Vector2f direction;
     int level;
 

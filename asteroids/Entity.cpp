@@ -1,14 +1,24 @@
 ﻿#include "Entity.h"
 
-Entity::Entity(sf::Vector2f position, float rotation, float size) : position(position), rotation(rotation), size(size) { }
+Entity::Entity(sf::Vector2f position, float rotation, float size) : position(position), rotation(rotation), size(size)
+{
+}
 
-void Entity::start() { }
+void Entity::start()
+{
+}
 
-void Entity::update(float deltaTime) { }
+void Entity::update(float deltaTime)
+{
+}
 
-void Entity::onDestroy() { }
+void Entity::onDestroy()
+{
+}
 
-void Entity::draw(sf::RenderWindow& window) { }
+void Entity::draw(sf::RenderWindow& window)
+{
+}
 
 sf::Transform Entity::getTransform()
 {

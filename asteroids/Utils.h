@@ -2,6 +2,6 @@
 
 namespace utils
 {
-    float randRangef(const float start, const float end);
-    int randRangei(const int start, const int end);
+    float randRangef(float start, float end);
+    int randRangei(int start, int end);
 }

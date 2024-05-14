@@ -7,7 +7,7 @@ public:
     sf::Vector2f position;
     float rotation;
     float size;
-    
+
     Entity(sf::Vector2f position, float rotation, float size);
 
     virtual void start();

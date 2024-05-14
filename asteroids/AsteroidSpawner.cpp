@@ -7,15 +7,17 @@
 #include "Physics.h"
 #include "Utils.h"
 
-AsteroidSpawner::AsteroidSpawner() : Entity(sf::Vector2f(0, 0), 0, 0), spawnTimer(ASTEROID_SPAWN_INTERVAL) { }
+AsteroidSpawner::AsteroidSpawner() : Entity(sf::Vector2f(0, 0), 0, 0), spawnTimer(SPAWN_INTERVAL)
+{
+}
 
 void AsteroidSpawner::update(float deltaTime)
 {
     spawnTimer -= deltaTime;
     if (spawnTimer <= 0)
     {
-        Game::createEntity(new Asteroid(getRandomPosition(), getRandomDirection(), ASTEROID_SPAWN_LEVEL));
-        spawnTimer = ASTEROID_SPAWN_INTERVAL;
+        Game::createEntity(new Asteroid(getRandomPosition(), getRandomDirection(), STARTING_LEVEL));
+        spawnTimer = SPAWN_INTERVAL;
     }
 }
 
@@ -30,9 +32,12 @@ sf::Vector2f AsteroidSpawner::getRandomPosition()
     sf::Vector2f result;
     do
     {
-        result = {utils::randRangef(ASTEROID_BASE_COLLISION_SIZE / 2, SCREEN_WIDTH - ASTEROID_BASE_COLLISION_SIZE / 2),
-            utils::randRangef(ASTEROID_BASE_COLLISION_SIZE / 2, SCREEN_HEIGHT - ASTEROID_BASE_COLLISION_SIZE / 2)};
+        result = {
+            utils::randRangef(ASTEROID_BASE_COLLISION_SIZE / 2, SCREEN_WIDTH - ASTEROID_BASE_COLLISION_SIZE / 2),
+            utils::randRangef(ASTEROID_BASE_COLLISION_SIZE / 2, SCREEN_HEIGHT - ASTEROID_BASE_COLLISION_SIZE / 2)
+        };
     }
-    while (physics::getDistanceSquaredTo(Game::player->position, result) < PLAYER_MINIMUM_SPAWN_DISTANCE_SQUARED);
+    while (physics::getDistanceSquaredTo(Game::player->position, result) < PLAYER_MINIMUM_SPAWN_DISTANCE *
+        PLAYER_MINIMUM_SPAWN_DISTANCE);
     return result;
 }
