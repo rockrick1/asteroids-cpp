@@ -65,8 +65,14 @@ void Player::processInputs(float deltaTime)
     position.x += motion.x;
     position.y += motion.y;
 
-    position.x = std::min(std::max(position.x, PLAYER_COLLISION_SIZE / 2), SCREEN_WIDTH - PLAYER_COLLISION_SIZE / 2);
-    position.y = std::min(std::max(position.y, PLAYER_COLLISION_SIZE / 2), SCREEN_HEIGHT - PLAYER_COLLISION_SIZE / 2);
+    if (position.x < -PLAYER_COLLISION_SIZE / 2)
+        position.x = SCREEN_WIDTH + PLAYER_COLLISION_SIZE / 2;
+    if (position.x > SCREEN_WIDTH + PLAYER_COLLISION_SIZE / 2)
+        position.x = -PLAYER_COLLISION_SIZE / 2;
+    if (position.y < -PLAYER_COLLISION_SIZE / 2)
+        position.y = SCREEN_HEIGHT + PLAYER_COLLISION_SIZE / 2;
+    if (position.y > SCREEN_HEIGHT + PLAYER_COLLISION_SIZE / 2)
+        position.y = -PLAYER_COLLISION_SIZE / 2;
 }
 
 void Player::checkDeath()
