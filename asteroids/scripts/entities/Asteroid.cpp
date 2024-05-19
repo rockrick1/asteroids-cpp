@@ -1,8 +1,8 @@
 ﻿#include "Asteroid.h"
 
-#include "Game.h"
-#include "Global.h"
-#include "Utils.h"
+#include "../Game.h"
+#include "../Global.h"
+#include "../Utils.h"
 
 Asteroid::Asteroid(sf::Vector2f position, sf::Vector2f direction, int level)
     : Entity(position, 0, ASTEROID_BASE_COLLISION_SIZE * level), direction(direction), level(level)

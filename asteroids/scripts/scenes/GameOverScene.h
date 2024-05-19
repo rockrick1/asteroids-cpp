@@ -8,6 +8,6 @@ class GameOverScene : public Scene
 {
 public:
     void load() override;
-    void update(float deltaTime) override;
+    void update(float deltaTime, float fixedDeltaTime) override;
     void draw(sf::RenderWindow& window) override;
 };

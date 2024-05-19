@@ -5,7 +5,6 @@
 #include <fstream>
 
 #include "entities/Asteroid.h"
-#include "scenes/GameOverScene.h"
 #include "scenes/MenuScene.h"
 #include "scenes/Scene.h"
 
@@ -27,6 +26,7 @@ Scene* currentScene = nullptr;
 void Game::initialize()
 {
     Audio::initialize();
+    window.setFramerateLimit(TARGET_FPS);
 
     std::ifstream file("score.dat", std::ios::binary | std::ios::in);
     if (file.is_open())
@@ -42,6 +42,7 @@ void Game::initialize()
 
 void Game::run()
 {
+    initialize();
     while (window.isOpen())
     {
         float deltaTime = gameClock.restart().asSeconds();
@@ -60,7 +61,7 @@ void Game::run()
 
 void Game::update(float deltaTime)
 {
-    currentScene->update(deltaTime);
+    currentScene->update(deltaTime, FIXED_FELTA_TIME);
     currentScene->draw(window);
 }
 

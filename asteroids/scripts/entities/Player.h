@@ -4,7 +4,7 @@
 
 constexpr float PLAYER_SIZE = 15;
 constexpr float PLAYER_COLLISION_SIZE = 40;
-constexpr float PLAYER_ACCELLERATION = .12f;
+constexpr float PLAYER_ACCELLERATION = 5;
 constexpr float TURN_SPEED = 250;
 constexpr float SHOOT_DELAY = .2f;
 
@@ -18,6 +18,7 @@ public:
     Player();
 
     void update(float deltaTime) override;
+    void fixedUpdate(float deltaTime) override;
     void draw(sf::RenderWindow& window) override;
 
 private:

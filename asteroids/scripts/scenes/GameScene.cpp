@@ -19,9 +19,9 @@ void GameScene::load()
 }
 
 
-void GameScene::update(float deltaTime)
+void GameScene::update(float deltaTime, float fixedDeltaTime)
 {
-    Scene::update(deltaTime);
+    Scene::update(deltaTime, fixedDeltaTime);
 
     scoreText.setString(std::to_string(Game::score));
 }

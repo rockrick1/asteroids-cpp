@@ -12,6 +12,7 @@ public:
 
     virtual void start();
     virtual void update(float deltaTime);
+    virtual void fixedUpdate(float deltaTime);
     virtual void onDestroy();
     virtual void draw(sf::RenderWindow& window);
     sf::Transform getTransform();

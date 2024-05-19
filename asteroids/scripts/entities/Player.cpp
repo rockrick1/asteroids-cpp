@@ -26,8 +26,12 @@ Player::Player() : Entity(sf::Vector2f(500, 500), 0, PLAYER_COLLISION_SIZE / 2),
 
 void Player::update(float deltaTime)
 {
-    processInputs(deltaTime);
     checkDeath();
+}
+
+void Player::fixedUpdate(float deltaTime)
+{
+    processInputs(deltaTime);
 }
 
 void Player::draw(sf::RenderWindow& window)
@@ -37,6 +41,7 @@ void Player::draw(sf::RenderWindow& window)
 
 void Player::processInputs(float deltaTime)
 {
+    printf("%f\n", deltaTime);
     if (shootTimer > 0)
         shootTimer -= deltaTime;
 
