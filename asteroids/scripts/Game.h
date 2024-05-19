@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "Entity.h"
-#include "Player.h"
+#include "entities/Entity.h"
+#include "entities/Player.h"
 
 constexpr int SCORE_FONT_SIZE = 48;
 constexpr int GAME_OVER_FONT_SIZE = 128;

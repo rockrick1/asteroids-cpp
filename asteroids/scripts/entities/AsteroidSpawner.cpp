@@ -2,10 +2,10 @@
 
 #include <random>
 
-#include "Global.h"
-#include "Game.h"
-#include "Physics.h"
-#include "Utils.h"
+#include "../Global.h"
+#include "../Game.h"
+#include "../Physics.h"
+#include "../Utils.h"
 
 AsteroidSpawner::AsteroidSpawner() : Entity(sf::Vector2f(0, 0), 0, 0), spawnTimer(SPAWN_INTERVAL)
 {

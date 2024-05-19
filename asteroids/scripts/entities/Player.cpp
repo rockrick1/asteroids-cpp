@@ -1,12 +1,12 @@
 ﻿#include "Player.h"
 
 #include "Asteroid.h"
-#include "Audio.h"
 #include "Bullet.h"
-#include "Game.h"
-#include "Global.h"
-#include "Physics.h"
-#include "SoundNames.h"
+#include "../Audio.h"
+#include "../Game.h"
+#include "../Global.h"
+#include "../Physics.h"
+#include "../SoundNames.h"
 
 Player::Player() : Entity(sf::Vector2f(500, 500), 0, PLAYER_COLLISION_SIZE / 2), vertexes(sf::LineStrip, 5),
                    motion(sf::Vector2f(0, 0)), shootTimer(0)

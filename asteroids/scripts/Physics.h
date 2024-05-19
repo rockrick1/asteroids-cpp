@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Entity.h"
+#include "entities/Entity.h"
 
 namespace physics
 {

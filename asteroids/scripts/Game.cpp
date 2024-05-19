@@ -1,11 +1,11 @@
 ﻿#include "Game.h"
 
-#include "Asteroid.h"
+#include "entities/Asteroid.h"
+#include "entities/AsteroidSpawner.h"
 #include "Audio.h"
 #include "Global.h"
 #include <fstream>
 
-#include "AsteroidSpawner.h"
 
 std::vector<Entity*> Game::entities{};
 std::vector<Entity*> Game::entitiesToAdd{};
@@ -46,7 +46,7 @@ void Game::initialize()
         file.close();
     }
 
-    font.loadFromFile("font.ttf");
+    font.loadFromFile("assets/font.ttf");
 
     highScoreText.setFont(font);
     highScoreText.setPosition(sf::Vector2f(40, 20));
