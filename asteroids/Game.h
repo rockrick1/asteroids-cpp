@@ -9,6 +9,8 @@ constexpr int SCORE_FONT_SIZE = 48;
 constexpr int GAME_OVER_FONT_SIZE = 128;
 constexpr int CONTINUE_FONT_SIZE = 24;
 
+const sf::Color backgroundColor = sf::Color(10, 10, 10, 255);
+
 class Game
 {
 public:

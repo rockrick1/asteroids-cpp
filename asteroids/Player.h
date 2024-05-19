@@ -6,7 +6,7 @@ constexpr float PLAYER_SIZE = 15;
 constexpr float PLAYER_COLLISION_SIZE = 40;
 constexpr float PLAYER_ACCELLERATION = .12f;
 constexpr float TURN_SPEED = 250;
-constexpr float SHOOT_DELAY = .4f;
+constexpr float SHOOT_DELAY = .2f;
 
 class Player : public Entity
 {

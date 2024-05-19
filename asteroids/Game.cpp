@@ -101,7 +101,7 @@ void Game::run()
                 window.close();
         }
 
-        window.clear();
+        window.clear(backgroundColor);
         update(deltaTime);
         window.display();
     }
