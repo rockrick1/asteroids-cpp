@@ -10,7 +10,6 @@ constexpr float SHOOT_DELAY = .2f;
 
 class Player : public Entity
 {
-private:
     sf::VertexArray vertexes;
     sf::Vector2f motion;
     float shootTimer;

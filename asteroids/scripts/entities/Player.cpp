@@ -7,6 +7,7 @@
 #include "../Global.h"
 #include "../Physics.h"
 #include "../SoundNames.h"
+#include "../scenes/GameOverScene.h"
 
 Player::Player() : Entity(sf::Vector2f(500, 500), 0, PLAYER_COLLISION_SIZE / 2), vertexes(sf::LineStrip, 5),
                    motion(sf::Vector2f(0, 0)), shootTimer(0)
@@ -77,15 +78,12 @@ void Player::processInputs(float deltaTime)
 
 void Player::checkDeath()
 {
-    for (size_t i = 0; i < Game::entities.size(); i++)
+    for (size_t i = 0; i < Game::getActiveEntities().size(); i++)
     {
-        if (typeid(*Game::entities[i]) != typeid(Asteroid))
+        if (typeid(*Game::getActiveEntities()[i]) != typeid(Asteroid))
             continue;
 
-        if (physics::intersects(*this, *Game::entities[i]))
-        {
-            Game::gameOver();
-            return;
-        }
+        if (physics::intersects(*this, *Game::getActiveEntities()[i]))
+            Game::changeScene(new GameOverScene);
     }
 }

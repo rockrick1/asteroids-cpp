@@ -19,18 +19,18 @@ void Bullet::update(float deltaTime)
     if (lifetime <= 0)
         Game::destroyEntity(this);
 
-    for (size_t i = 0; i < Game::entities.size(); i++)
+    for (size_t i = 0; i < Game::getActiveEntities().size(); i++)
     {
-        if (typeid(*Game::entities[i]) != typeid(Asteroid))
+        if (typeid(*Game::getActiveEntities()[i]) != typeid(Asteroid))
             continue;
 
-        auto asteroid = dynamic_cast<Asteroid*>(Game::entities[i]);
+        auto asteroid = dynamic_cast<Asteroid*>(Game::getActiveEntities()[i]);
 
         if (physics::intersects(position, physics::getTransformedPolygon(asteroid->vertexes, asteroid->getTransform())))
         {
             lifetime = 0;
             Game::destroyEntity(asteroid);
-            Game::incrementScore(10);
+            Game::incrementScore(SCORE_PER_ASTEROID);
             Audio::playSound(ASTEROID_HIT);
             return;
         }

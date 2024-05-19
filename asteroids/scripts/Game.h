@@ -1,49 +1,37 @@
 ﻿#pragma once
 
-#include <vector>
-
 #include "entities/Entity.h"
 #include "entities/Player.h"
+#include "scenes/Scene.h"
 
-constexpr int SCORE_FONT_SIZE = 48;
-constexpr int GAME_OVER_FONT_SIZE = 128;
-constexpr int CONTINUE_FONT_SIZE = 24;
+constexpr int SCORE_PER_ASTEROID = 1000;
 
-const sf::Color backgroundColor = sf::Color(10, 10, 10, 255);
+const auto backgroundColor = sf::Color(10, 10, 10, 255);
 
 class Game
 {
 public:
-    static std::vector<Entity*> entities;
+    static size_t score;
+    static size_t highScore;
     static Player* player;
 
 private:
-    static std::vector<Entity*> entitiesToAdd;
-    static std::vector<Entity*> entitiesToRemove;
-    static size_t score;
-    static size_t highScore;
-
     static sf::Text highScoreText;
     static sf::Text menuText;
     static sf::Text playText;
 
-    static sf::Text scoreText;
-
-    static sf::Text gameOverText;
-    static sf::Text continueText;
-
+public:
     static sf::Font font;
 
-    static enum State { MENU, GAME, GAME_OVER } state;
-
-public:
     static void initialize();
-    static void begin();
     static void run();
     static void createEntity(Entity* entity);
     static void destroyEntity(Entity* entity);
     static void incrementScore(int amount);
-    static void gameOver();
+    static void resetScore();
+    static bool updateHighScore();
+    static std::vector<Entity*> getActiveEntities();
+    static void changeScene(Scene* scene);
 
 private:
     static void update(float deltaTime);
