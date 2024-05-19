@@ -26,9 +26,7 @@ Asteroid::Asteroid(sf::Vector2f position, sf::Vector2f direction, int level)
     vertexes[nodeAmount - 1].position = vertexes[0].position;
 
     for (size_t i = 0; i < vertexes.getVertexCount(); i++)
-    {
-        vertexes[i].color = sf::Color::White;
-    }
+        vertexes[i].color = sf::Color(150, 255, 150, 255);
 }
 
 void Asteroid::update(float deltaTime)

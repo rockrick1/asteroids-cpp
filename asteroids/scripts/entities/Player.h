@@ -18,7 +18,6 @@ public:
     Player();
 
     void update(float deltaTime) override;
-    void fixedUpdate(float deltaTime) override;
     void draw(sf::RenderWindow& window) override;
 
 private:

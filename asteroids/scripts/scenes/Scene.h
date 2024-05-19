@@ -16,7 +16,7 @@ public:
     Scene();
 
     virtual void load();
-    virtual void update(float deltaTime, float fixedDeltaTime);
+    virtual void update(float deltaTime);
     virtual void unload();
     virtual void draw(sf::RenderWindow& window);
 

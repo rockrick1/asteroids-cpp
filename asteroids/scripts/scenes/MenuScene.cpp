@@ -29,9 +29,9 @@ void MenuScene::load()
     highScoreText.setString("high score: " + std::to_string(Game::highScore));
 }
 
-void MenuScene::update(float deltaTime, float fixedDeltaTime)
+void MenuScene::update(float deltaTime)
 {
-    Scene::update(deltaTime, fixedDeltaTime);
+    Scene::update(deltaTime);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
         Game::changeScene(new GameScene);

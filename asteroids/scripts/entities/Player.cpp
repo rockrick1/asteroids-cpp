@@ -19,19 +19,13 @@ Player::Player() : Entity(sf::Vector2f(500, 500), 0, PLAYER_COLLISION_SIZE / 2),
     vertexes[4].position = vertexes[0].position;
 
     for (size_t i = 0; i < vertexes.getVertexCount(); i++)
-    {
         vertexes[i].color = sf::Color::White;
-    }
 }
 
 void Player::update(float deltaTime)
 {
-    checkDeath();
-}
-
-void Player::fixedUpdate(float deltaTime)
-{
     processInputs(deltaTime);
+    checkDeath();
 }
 
 void Player::draw(sf::RenderWindow& window)
@@ -41,18 +35,13 @@ void Player::draw(sf::RenderWindow& window)
 
 void Player::processInputs(float deltaTime)
 {
-    printf("%f\n", deltaTime);
     if (shootTimer > 0)
         shootTimer -= deltaTime;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
         rotation -= TURN_SPEED * deltaTime;
-    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
         rotation += TURN_SPEED * deltaTime;
-    }
 
     float radians = rotation * DEG_TO_RAD;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))

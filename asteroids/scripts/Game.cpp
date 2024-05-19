@@ -22,6 +22,7 @@ sf::RenderWindow window(
 sf::Clock gameClock{};
 
 Scene* currentScene = nullptr;
+Scene* nextScene = nullptr;
 
 void Game::initialize()
 {
@@ -37,7 +38,8 @@ void Game::initialize()
 
     font.loadFromFile("assets/font.ttf");
 
-    changeScene(new MenuScene);
+    currentScene = new MenuScene;
+    currentScene->load();
 }
 
 void Game::run()
@@ -61,8 +63,16 @@ void Game::run()
 
 void Game::update(float deltaTime)
 {
-    currentScene->update(deltaTime, FIXED_FELTA_TIME);
+    currentScene->update(deltaTime);
     currentScene->draw(window);
+    if (nextScene == nullptr)
+        return;
+    
+    currentScene->unload();
+    delete currentScene;
+    currentScene = nextScene;
+    currentScene->load();
+    nextScene = nullptr;
 }
 
 void Game::createEntity(Entity* entity)
@@ -100,9 +110,5 @@ std::vector<Entity*> Game::getActiveEntities()
 
 void Game::changeScene(Scene* scene)
 {
-    if (currentScene != nullptr)
-        currentScene->unload();
-    delete currentScene;
-    currentScene = scene;
-    currentScene->load();
+    nextScene = scene;
 }

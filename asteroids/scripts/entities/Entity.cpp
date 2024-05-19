@@ -12,10 +12,6 @@ void Entity::update(float deltaTime)
 {
 }
 
-void Entity::fixedUpdate(float deltaTime)
-{
-}
-
 void Entity::onDestroy()
 {
 }

@@ -37,9 +37,9 @@ void GameOverScene::load()
     continueText.setString("Press enter to play again");
 }
 
-void GameOverScene::update(float deltaTime, float fixedDeltaTime)
+void GameOverScene::update(float deltaTime)
 {
-    Scene::update(deltaTime, fixedDeltaTime);
+    Scene::update(deltaTime);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
         Game::changeScene(new GameScene);

@@ -6,7 +6,7 @@
 
 constexpr int SCORE_PER_ASTEROID = 1000;
 constexpr int TARGET_FPS = 60;
-constexpr float FIXED_FELTA_TIME = 1.f / 60.f;
+constexpr float FIXED_DELTA_TIME = 1.f / 60.f;
 
 const auto backgroundColor = sf::Color(10, 10, 10, 255);
 

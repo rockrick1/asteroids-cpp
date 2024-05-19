@@ -11,12 +11,11 @@ void Scene::load()
     willUnloadScene = false;
 }
 
-void Scene::update(float deltaTime, float fixedDeltaTime)
+void Scene::update(float deltaTime)
 {
     for (size_t i = 0; i < entities.size(); i++)
     {
         entities[i]->update(deltaTime);
-        entities[i]->fixedUpdate(fixedDeltaTime);
     }
 
     if (willUnloadScene)
